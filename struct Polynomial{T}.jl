@@ -110,21 +110,16 @@ Base. %(p::Polynomial{T}, q::Polynomial{T}) where T = divrem(p, q)[2]#Делен
 #x^3 + x^2 + x + 1
 #((x + 1)x + 1)x + 1
 #((ax + b)x + c)x + d
-function (p::Polynomial)(coeffs,x,n=length(coeffs))
+function (p::Polynomial)(x)
     n = ord(p)
     res = p.coeffs[1]
     for i = 2:n+1
         res = res * x + p.coeffs[i]
     end
     return res
-
-    derivative_coeffs = [coeffs[i] *i fro i in 1:n-1]
-    derivative_value = sum([derivative_coeffs[i] * x ^i for i in 1: length(derivative_coeffs)])
-    return derivative_value
-
 end
 
-#=derivative(p::Polynomial{T}) where T = begin #Вычисление проиводной многочлена 
+derivative(p::Polynomial{T}) where T = begin #Вычисление проиводной многочлена 
     #ax^n + bx^(n - 1) + ... + cx^2 + dx + e
     #an * x^(n - 1) + b(n - 1) * x^(n - 2) + ... + 2cx + d
     n = ord(p)
@@ -148,7 +143,7 @@ valdiff(p::Polynomial{T}, x) where T = begin #вернуть значение м
 
     return (r, dr)
 end
-=#
+
 
 v1 = [7//1, 0//1, -5//1, 1//1, 2//1]
 p1 = Polynomial{Rational}(v1)
